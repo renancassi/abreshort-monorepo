@@ -1,0 +1,12 @@
+services:
+    postgres:
+        image: postgres:16
+        container_name: db-abreshort-api-postgres
+        tty: true
+        stdin_open: true
+        environment:
+            POSTGRES_DB: ${DATABASE_DB}
+            POSTGRES_USER: ${DATABASE_USER}
+            POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+        ports:
+            - "${DATABASE_PORT}:5432"
