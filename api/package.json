@@ -1,0 +1,33 @@
+{
+  "name": "abreshort-api",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "dev": "tsx watch --env-file=.env src/server.ts",
+    "start": "node dist/server.js",
+    "db:migrate": "npx prisma migrate dev --name init",
+    "db:generate": "npx prisma generate",
+    "db:deploy": "npx prisma migrate deploy"
+  },
+  "author": "Renan Cassi",
+  "devDependencies": {
+    "@biomejs/biome": "2.4.7",
+    "@types/node": "25.5.0",
+    "@types/pg": "^8.18.0",
+    "prisma": "^6.19.2",
+    "tsx": "^4.21.0",
+    "typescript": "5.9.3"
+  },
+  "dependencies": {
+    "@fastify/cors": "^11.2.0",
+    "@fastify/swagger": "^9.7.0",
+    "@prisma/adapter-pg": "^7.5.0",
+    "@prisma/client": "^6.19.2",
+    "@scalar/fastify-api-reference": "^1.46.4",
+    "dotenv": "^17.3.1",
+    "fastify": "5.8.2",
+    "fastify-type-provider-zod": "^6.1.0",
+    "pg": "^8.20.0",
+    "zod": "^4.3.6"
+  }
+}
