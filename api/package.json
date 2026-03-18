@@ -7,7 +7,8 @@
     "start": "node dist/server.js",
     "db:migrate": "npx prisma migrate dev --name init",
     "db:generate": "npx prisma generate",
-    "db:deploy": "npx prisma migrate deploy"
+    "db:deploy": "npx prisma migrate deploy",
+    "db:studio": "npx prisma studio"
   },
   "author": "Renan Cassi",
   "devDependencies": {
