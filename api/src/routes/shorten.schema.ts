@@ -9,6 +9,8 @@ export const shortenParamsSchema = z.object({
 
 export const responseSchema = z.object({
     code: z.string(),
+    fullShortUrl: z.string().url(),
+    qrCode: z.string(),
 });
 
 export const errorSchema = z.object({
