@@ -11,7 +11,7 @@ cd api
 ```bash
 npm install
 ```
-#### 3. Configurar variáveis de ambiente: 
+#### 3. Configurar variáveis de ambiente
 
 Crie seu arquivo `.env` a partir do modelo `.env.example`.
     
