@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { fastify } from "fastify";
 import {
     serializerCompiler,
@@ -8,6 +9,7 @@ import {
 import { fastifySwagger } from '@fastify/swagger';
 import { fastifyCors } from '@fastify/cors';
 import ScalarApiReference from '@scalar/fastify-api-reference';
+import { prismaPlugin } from "./plugins/prisma.plugins";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -35,11 +37,24 @@ app.register(ScalarApiReference, {
     routePrefix: '/docs',
 })
 
-app.listen({ port: 3000, host: "0.0.0.0" }, (err, address) => {
-    if (err) {
+async function start() {
+    try {
+        await app.register(prismaPlugin);
+
+        const address = await app.listen({
+            port: Number(process.env.SERVER_PORT) || 3000,
+            host: String(process.env.SERVER_HOST) || '0.0.0.0',
+        });
+
+        console.log(`| Server -> ${address}`);
+        console.log(`| Docs   -> ${address}/docs`);
+    } catch (err) {
         console.error(err);
         process.exit(1);
     }
-    console.log(`| Server -> ${address}`);
-    console.log(`| Docs   -> ${address}/docs`);
+}
+
+start().catch((err) => {
+    console.error(err);
+    process.exit(1);
 });
