@@ -10,6 +10,7 @@ import { fastifySwagger } from '@fastify/swagger';
 import { fastifyCors } from '@fastify/cors';
 import ScalarApiReference from '@scalar/fastify-api-reference';
 import { prismaPlugin } from "./plugins/prisma.plugins";
+import { shortenRoute } from "./routes/shorten.route";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -40,12 +41,15 @@ app.register(ScalarApiReference, {
 async function start() {
     try {
         await app.register(prismaPlugin);
+        await app.register(shortenRoute);
+
+
+
 
         const address = await app.listen({
             port: Number(process.env.SERVER_PORT) || 3000,
             host: String(process.env.SERVER_HOST) || '0.0.0.0',
         });
-
         console.log(`| Server -> ${address}`);
         console.log(`| Docs   -> ${address}/docs`);
     } catch (err) {
