@@ -1,22 +1,11 @@
+import { generateQrCode } from "@/utils/qrcode";
 import { FastifyInstance } from "fastify";
-import { z } from "zod";
+import { nanoid } from 'nanoid';
+import { shortenBodySchema, shortenParamsSchema, responseSchema, errorSchema, shareResponseSchema } from "./shorten.schema";
+
 
 export async function shortenRoute(app: FastifyInstance) {
-    const shortenBodySchema = z.object({
-        url: z.string().url(),
-    });
 
-    const shortenParamsSchema = z.object({
-        code: z.string(),
-    });
-
-    const responseSchema = z.object({
-        code: z.string(),
-    });
-
-    const errorSchema = z.object({
-        message: z.string(),
-    });
 
     // POST /shorten
     app.post(
@@ -32,14 +21,17 @@ export async function shortenRoute(app: FastifyInstance) {
         },
         async (req, res) => {
             const { url } = shortenBodySchema.parse(req.body);
-            const code = Math.random().toString(36).substring(2, 8);
+            const code = nanoid(6);
+            const baseUrl = process.env.BASE_URL;
+            const qrcode = `${baseUrl}/${code}`;
+            const qrCode = await generateQrCode(qrcode);
 
             try {
                 await app.prisma.short_urls.create({
                     data: {
                         code,
                         originalUrl: url,
-                        qrCode: "",
+                        qrCode: qrCode,
                     },
                 });
 
@@ -87,6 +79,48 @@ export async function shortenRoute(app: FastifyInstance) {
                 });
 
                 return res.redirect(shortUrl.originalUrl);
+            } catch {
+                return res.status(404).send({
+                    message: "Error getting short URL",
+                });
+            }
+        }
+    );
+
+    app.get(
+        "/:code/share",
+        {
+            schema: {
+                params: shortenParamsSchema,
+                response: {
+                    200: shareResponseSchema,
+                    404: errorSchema,
+                },
+            },
+        },
+        async (req, res) => {
+            const { code } = shortenParamsSchema.parse(req.params);
+
+            try {
+                const shortUrl = await app.prisma.short_urls.findUnique({
+                    where: { code },
+                });
+
+                if (!shortUrl) {
+                    return res.status(404).send({
+                        message: "Short URL not found",
+                    });
+                }
+
+                const baseUrl = process.env.BASE_URL!;
+                const fullShortUrl = `${baseUrl}/${code}`;
+
+                return res.send({
+                    code,
+                    url: shortUrl.originalUrl,
+                    shortUrl: fullShortUrl,
+                    clicks: shortUrl.clicks,
+                });
             } catch {
                 return res.status(404).send({
                     message: "Error getting short URL",
