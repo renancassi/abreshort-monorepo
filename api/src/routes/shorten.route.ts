@@ -23,8 +23,9 @@ export async function shortenRoute(app: FastifyInstance) {
             const { url } = shortenBodySchema.parse(req.body);
             const code = nanoid(6);
             const baseUrl = process.env.BASE_URL;
-            const qrcode = `${baseUrl}/${code}`;
-            const qrCode = await generateQrCode(qrcode);
+            const fullShortUrl = `${baseUrl}/${code}`;
+            const qrCode = await generateQrCode(fullShortUrl);
+
 
             try {
                 await app.prisma.short_urls.create({
@@ -35,7 +36,7 @@ export async function shortenRoute(app: FastifyInstance) {
                     },
                 });
 
-                return res.status(201).send({ code });
+                return res.status(201).send({ code, fullShortUrl, qrCode });
             } catch {
                 return res.status(400).send({
                     message: "Error creating short URL",
