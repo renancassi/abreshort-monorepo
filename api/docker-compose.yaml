@@ -10,3 +10,13 @@ services:
             POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
         ports:
             - "${DATABASE_PORT}:5432"
+
+    api:
+        build: ./
+        container_name: abreshort-api
+        env_file:
+            - .env
+        ports:
+            - "3000:3000"
+        depends_on:
+            - postgres
