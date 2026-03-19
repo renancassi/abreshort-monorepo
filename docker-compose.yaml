@@ -1,0 +1,29 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: db-abreshort-api-postgres
+    tty: true
+    stdin_open: true
+    environment:
+      POSTGRES_DB: ${DATABASE_DB}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    ports:
+      - "${DATABASE_PORT}:5432"
+
+  api:
+    build: ./api
+    container_name: abreshort-api
+    env_file:
+      - ./api/.env
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+  frontend:
+    build: ./frontend
+    container_name: abreshort-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - api

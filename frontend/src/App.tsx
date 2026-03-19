@@ -1,4 +1,4 @@
-import { Shortener } from "./pages/shortener.tsx";
+import { Shortener } from "./pages/Shortener.tsx";
 
 function App() {
   return <Shortener />;
