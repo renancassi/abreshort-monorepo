@@ -9,8 +9,8 @@ import {
 import { fastifySwagger } from '@fastify/swagger';
 import { fastifyCors } from '@fastify/cors';
 import ScalarApiReference from '@scalar/fastify-api-reference';
-import { prismaPlugin } from "./plugins/prisma.plugins";
-import { shortenRoute } from "./routes/shorten.route";
+import { prismaPlugin } from "./plugins/prisma.plugins.js";
+import { shortenRoute } from "./routes/shorten.route.js";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 

@@ -1,7 +1,7 @@
-import { generateQrCode } from "@/utils/qrcode";
+import { generateQrCode } from "@/utils/qrcode.js";
 import { FastifyInstance } from "fastify";
 import { nanoid } from 'nanoid';
-import { shortenBodySchema, shortenParamsSchema, responseSchema, errorSchema, shareResponseSchema } from "./shorten.schema";
+import { shortenBodySchema, shortenParamsSchema, responseSchema, errorSchema, shareResponseSchema } from "./shorten.schema.js";
 
 
 export async function shortenRoute(app: FastifyInstance) {
