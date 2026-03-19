@@ -6,11 +6,12 @@
       "es2023"
     ],
     "module": "nodenext",
+    "outDir": "dist",
     "target": "es2022",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "moduleResolution": "node16",
+    "moduleResolution": "nodenext",
     "paths": {
       "@/*": [
         "./src/*"
