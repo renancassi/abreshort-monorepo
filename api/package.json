@@ -2,9 +2,11 @@
   "name": "abreshort-api",
   "version": "1.0.0",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "dev": "tsx watch --env-file=.env src/server.ts",
-    "start": "node dist/server.js",
+    "start": "node dist/src/server.js",
+    "build": "tsc && tsc-alias",
     "db:migrate": "npx prisma migrate dev --name init",
     "db:generate": "npx prisma generate",
     "db:deploy": "npx prisma migrate deploy",
@@ -16,6 +18,7 @@
     "@types/node": "25.5.0",
     "@types/qrcode": "1.5.6",
     "prisma": "7.5.0",
+    "tsc-alias": "1.8.16",
     "tsx": "4.21.0",
     "typescript": "5.9.3"
   },
