@@ -71,7 +71,7 @@ docker compose exec api npm run db:migrate
 #### 3. Disponibilidade dos serviços
 
 
-| Serviço  | URL                        | porta padrão |
+| Serviço  | URL                        | Porta Padrão |
 | -------- | -------------------------- | ------------ |
 | API      | http://localhost:3000      | 3000         |
 | API Docs | http://localhost:3000/docs | 3000         |
