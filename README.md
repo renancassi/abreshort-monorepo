@@ -3,23 +3,23 @@
 ## Setup de Desenvolvimento (API)
 Siga os passos abaixo para rodar o projeto localmente.
 
-#### 1. Entrar na pasta da API
+#### 1. Subir o banco de dados (Docker)
+```bash
+docker compose up -d postgres
+```
+
+#### 2. Entrar na pasta da API
 ```bash
 cd api
 ```
-#### 2. Instalar dependências
+#### 3. Instalar dependências
 ```bash
 npm install
 ```
-#### 3. Configurar variáveis de ambiente
+#### 4. Configurar variáveis de ambiente
 
 Crie seu arquivo `.env` a partir do modelo `.env.example`.
     
-#### 4. Subir o banco com Docker
-```bash
-docker compose up -d
-```
-
 #### 5. Gerar o client do Prisma
 ```bash
 npm run db:generate
